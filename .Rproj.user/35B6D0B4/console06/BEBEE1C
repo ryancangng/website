@@ -1,0 +1,11 @@
+]0;/stor/home/rcn468/rcn468website]0;rcn468@educcomp04: ~/rcn468website[01;32mrcn468@educcomp04[00m:[01;34m~/rcn468website[00m$ [K]0;rcn468@educcomp04: ~/rcn468website[01;32mrcn468@educcomp04[00m:[01;34m~/rcn468website[00m$ git --version
+git version 2.17.1
+cd ~/Home/rcn468website
+bash: cd: /stor/home/rcn468/Home/rcn468website: No such file or directory
+]0;/stor/home/rcn468/rcn468website]0;rcn468@educcomp02: ~/rcn468website[01;32mrcn468@educcomp02[00m:[01;34m~/rcn468website[00m$ cd ~/rcn468website
+]0;/stor/home/rcn468/rcn468website]0;rcn468@educcomp02: ~/rcn468website[01;32mrcn468@educcomp02[00m:[01;34m~/rcn468website[00m$ git init
+Initialized empty Git repository in /stor/home/rcn468/rcn468website/.git/
+]0;/stor/home/rcn468/rcn468website]0;rcn468@educcomp02: ~/rcn468website[01;32mrcn468@educcomp02[00m:[01;34m~/rcn468website[00m$ git add
+Nothing specified, nothing added.
+Maybe you wanted to say 'git add .'?
+]0;/stor/home/rcn468/rcn468website]0;rcn468@educcomp02: ~/rcn468website[01;32mrcn468@educcomp02[00m:[01;34m~/rcn468website[00m$ git add .

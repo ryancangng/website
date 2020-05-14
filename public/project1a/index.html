@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Ryan Nguyen" />
+    <meta name="description" content="Describe your website">
+    <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.ico">
+    <title>Project 1</title>
+    <meta name="generator" content="Hugo 0.70.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="../"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="../blog/">BLOG</a></li>
+        
+        <li><a href="../projects/">PROJECTS</a></li>
+        
+        <li><a href="Ryan%20Nguyen%20Resume%20.pdf">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="../project1a/">Project 1</a></strong>
+          </h3>
+        </div>
+        <div class="blog-title">
+          <h4>
+          January 1, 0001
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+
+
+<div id="introduction" class="section level3">
+<h3>0: Introduction</h3>
+<pre class="r"><code>library(tidyverse)
+Heart1&lt;-survival::jasa
+Heart2&lt;-survival::jasa1
+glimpse(Heart1)</code></pre>
+<pre><code>## Observations: 103
+## Variables: 14
+## $ birth.dt   &lt;date&gt; 1937-01-10, 1916-03-02, 1913-09-19, 1927-12-23, 1947-07-2…
+## $ accept.dt  &lt;date&gt; 1967-11-15, 1968-01-02, 1968-01-06, 1968-03-28, 1968-05-1…
+## $ tx.date    &lt;date&gt; NA, NA, 1968-01-06, 1968-05-02, NA, NA, 1968-08-31, NA, N…
+## $ fu.date    &lt;date&gt; 1968-01-03, 1968-01-07, 1968-01-21, 1968-05-05, 1968-05-2…
+## $ fustat     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+## $ surgery    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0…
+## $ age        &lt;dbl&gt; 30.84463, 51.83573, 54.29706, 40.26283, 20.78576, 54.59548…
+## $ futime     &lt;dbl&gt; 49, 5, 15, 38, 17, 2, 674, 39, 84, 57, 152, 7, 80, 1386, 0…
+## $ wait.time  &lt;dbl&gt; NA, NA, 0, 35, NA, NA, 50, NA, NA, 11, 25, NA, 16, 36, NA,…
+## $ transplant &lt;dbl&gt; 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1…
+## $ mismatch   &lt;dbl&gt; NA, NA, 2, 3, NA, NA, 4, NA, NA, 2, 1, NA, 3, 1, NA, 2, NA…
+## $ hla.a2     &lt;dbl&gt; NA, NA, 0, 0, NA, NA, 0, NA, NA, 0, 0, NA, 0, 0, NA, 0, NA…
+## $ mscore     &lt;dbl&gt; NA, NA, 1.11, 1.66, NA, NA, 1.32, NA, NA, 0.61, 0.36, NA, …
+## $ reject     &lt;dbl&gt; NA, NA, 0, 0, NA, NA, 1, NA, NA, 1, 0, NA, 1, 1, NA, 1, NA…</code></pre>
+<pre class="r"><code>glimpse(Heart2)</code></pre>
+<pre><code>## Observations: 170
+## Variables: 8
+## $ id         &lt;dbl&gt; 1, 2, 3, 4, 4, 5, 6, 7, 7, 8, 9, 10, 10, 11, 11, 12, 13, 1…
+## $ start      &lt;dbl&gt; 0, 0, 0, 0, 35, 0, 0, 0, 50, 0, 0, 0, 11, 0, 25, 0, 0, 16,…
+## $ stop       &lt;dbl&gt; 49.0, 5.0, 15.0, 35.0, 38.0, 17.0, 2.0, 50.0, 674.0, 39.0,…
+## $ event      &lt;dbl&gt; 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1…
+## $ transplant &lt;dbl&gt; 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1…
+## $ age        &lt;dbl&gt; -17.15537303, 3.83572895, 6.29705681, -7.73716632, -7.7371…
+## $ year       &lt;dbl&gt; 0.1232033, 0.2546201, 0.2655715, 0.4900753, 0.4900753, 0.6…
+## $ surgery    &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…</code></pre>
+<p><em>For this project, I chose to examine the jasa dataset, detailing information from Stanford’s heart transplant program in 1977. This dataset was acquired from the survival pagckage within the R-database. The variables in jasa are birthdate, acceptance date, transplant date, last followup date, death of patient (fustat), prior heart transplant (surgery), patient age, total days in study (futime), wait time for transplant(by days), tranplant completed, and several mismatch statistical scores. For jasa1, the variables are patient id, the start and stop of periodic appointments (by days), completion of study (event), surgery completion, age minus 48, year since 1967, and prior transplant. The information on this dataset was acquired both through Rstudio and base on the original research paper. I chose this dataset because I found the information to be interesting and related my future profession. In general, the two datasets provided distinct information and will complement each other well.</em></p>
+<hr />
+</div>
+<div id="section" class="section level3">
+<h3>1:</h3>
+<pre class="r"><code>library(dplyr)
+
+Tidy1&lt;-Heart2%&gt;%mutate(AGE = age + 48)%&gt;%select(-age)%&gt;%mutate(YEAR = year+1967)%&gt;%
+  pivot_wider(names_from = &quot;transplant&quot;,values_from = &quot;YEAR&quot;)%&gt;%
+  rename(&quot;recieved&quot;=&quot;1&quot;,&quot;not.rec&quot;=&quot;0&quot;,&quot;apt_start&quot;=&quot;start&quot;,&quot;apt.stop&quot;=&quot;stop&quot;)%&gt;%
+  select(-event)%&gt;%select(-year)
+Tidy2&lt;-Heart1%&gt;%mutate(id=row.names(Heart1))%&gt;%mutate(id=as.character(id))%&gt;%
+  rename(&quot;death&quot;=&quot;fustat&quot;)%&gt;%
+  rename(&quot;prior.trans&quot;=&quot;surgery&quot;,&quot;total.days&quot;=&quot;futime&quot;,&quot;last.dt&quot;=&quot;fu.date&quot;)%&gt;%
+  select(-mismatch)%&gt;%select(-hla.a2)%&gt;%select(-mscore)%&gt;%
+  mutate(death=as.character(death))%&gt;%mutate(reject=as.character(reject))%&gt;%
+  mutate(prior.trans=as.character(prior.trans))
+glimpse(Tidy1)</code></pre>
+<pre><code>## Observations: 170
+## Variables: 7
+## $ id        &lt;dbl&gt; 1, 2, 3, 4, 4, 5, 6, 7, 7, 8, 9, 10, 10, 11, 11, 12, 13, 13…
+## $ apt_start &lt;dbl&gt; 0, 0, 0, 0, 35, 0, 0, 0, 50, 0, 0, 0, 11, 0, 25, 0, 0, 16, …
+## $ apt.stop  &lt;dbl&gt; 49.0, 5.0, 15.0, 35.0, 38.0, 17.0, 2.0, 50.0, 674.0, 39.0, …
+## $ surgery   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ AGE       &lt;dbl&gt; 30.84463, 51.83573, 54.29706, 40.26283, 40.26283, 20.78576,…
+## $ not.rec   &lt;dbl&gt; 1967.123, 1967.255, NA, 1967.490, NA, 1967.608, 1967.701, 1…
+## $ recieved  &lt;dbl&gt; NA, NA, 1967.266, NA, 1967.490, NA, NA, NA, 1967.780, NA, N…</code></pre>
+<pre class="r"><code>glimpse(Tidy2)</code></pre>
+<pre><code>## Observations: 103
+## Variables: 12
+## $ birth.dt    &lt;date&gt; 1937-01-10, 1916-03-02, 1913-09-19, 1927-12-23, 1947-07-…
+## $ accept.dt   &lt;date&gt; 1967-11-15, 1968-01-02, 1968-01-06, 1968-03-28, 1968-05-…
+## $ tx.date     &lt;date&gt; NA, NA, 1968-01-06, 1968-05-02, NA, NA, 1968-08-31, NA, …
+## $ last.dt     &lt;date&gt; 1968-01-03, 1968-01-07, 1968-01-21, 1968-05-05, 1968-05-…
+## $ death       &lt;chr&gt; &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1…
+## $ prior.trans &lt;chr&gt; &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0…
+## $ age         &lt;dbl&gt; 30.84463, 51.83573, 54.29706, 40.26283, 20.78576, 54.5954…
+## $ total.days  &lt;dbl&gt; 49, 5, 15, 38, 17, 2, 674, 39, 84, 57, 152, 7, 80, 1386, …
+## $ wait.time   &lt;dbl&gt; NA, NA, 0, 35, NA, NA, 50, NA, NA, 11, 25, NA, 16, 36, NA…
+## $ transplant  &lt;dbl&gt; 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, …
+## $ reject      &lt;chr&gt; NA, NA, &quot;0&quot;, &quot;0&quot;, NA, NA, &quot;1&quot;, NA, NA, &quot;1&quot;, &quot;0&quot;, NA, &quot;1&quot;,…
+## $ id          &lt;chr&gt; &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;, &quot;11&quot;, …</code></pre>
+<p><em>While the datasets are already tidy, I wanted to adjust the datasets and reword the variables. For jasa1/Heart2, I added 48 to age and 1967 to year. This provided the actual age of the patient and the start year. I pivot_wider the transplant variable to provide a better visual on which patient recieved a transplant and their respective start year. I renamed some of the variables to improve description. For jasa/Heart1, I created a column for patient id because this dataset lacked this information. I renamed certain variables and corrected categorical variables that were coded as numeric. Lastly, I removed the mismatch statistics from this dataset because they were uneeded for the dataset.</em></p>
+<hr />
+</div>
+<div id="section-1" class="section level3">
+<h3>2:</h3>
+<pre class="r"><code>Tidy1&lt;-Tidy1%&gt;%pivot_longer(cols=c(&quot;recieved&quot;,&quot;not.rec&quot;),names_to = &quot;transplant.&quot;,values_to = &quot;year&quot;)%&gt;%na.omit()%&gt;%mutate(id=as.character(id))
+
+Full_data&lt;-Tidy1%&gt;%full_join(Tidy2, by=&quot;id&quot;)%&gt;%
+  select(-year)%&gt;%select(-surgery)%&gt;%select(-transplant)%&gt;%select(-age)
+glimpse(Full_data)</code></pre>
+<pre><code>## Observations: 170
+## Variables: 14
+## $ id          &lt;chr&gt; &quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;1…
+## $ apt_start   &lt;dbl&gt; 0, 0, 0, 0, 35, 0, 0, 0, 50, 0, 0, 0, 11, 0, 25, 0, 0, 16…
+## $ apt.stop    &lt;dbl&gt; 49.0, 5.0, 15.0, 35.0, 38.0, 17.0, 2.0, 50.0, 674.0, 39.0…
+## $ AGE         &lt;dbl&gt; 30.84463, 51.83573, 54.29706, 40.26283, 40.26283, 20.7857…
+## $ transplant. &lt;chr&gt; &quot;not.rec&quot;, &quot;not.rec&quot;, &quot;recieved&quot;, &quot;not.rec&quot;, &quot;recieved&quot;, …
+## $ birth.dt    &lt;date&gt; 1937-01-10, 1916-03-02, 1913-09-19, 1927-12-23, 1927-12-…
+## $ accept.dt   &lt;date&gt; 1967-11-15, 1968-01-02, 1968-01-06, 1968-03-28, 1968-03-…
+## $ tx.date     &lt;date&gt; NA, NA, 1968-01-06, 1968-05-02, 1968-05-02, NA, NA, 1968…
+## $ last.dt     &lt;date&gt; 1968-01-03, 1968-01-07, 1968-01-21, 1968-05-05, 1968-05-…
+## $ death       &lt;chr&gt; &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1&quot;, &quot;1…
+## $ prior.trans &lt;chr&gt; &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0…
+## $ total.days  &lt;dbl&gt; 49, 5, 15, 38, 38, 17, 2, 674, 674, 39, 84, 57, 57, 152, …
+## $ wait.time   &lt;dbl&gt; NA, NA, 0, 35, 35, NA, NA, 50, 50, NA, NA, 11, 11, 25, 25…
+## $ reject      &lt;chr&gt; NA, NA, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, NA, NA, &quot;1&quot;, &quot;1&quot;, NA, NA, &quot;1&quot;, &quot;1&quot;…</code></pre>
+<p><em>To join the datasets, I used full_join to ensure that variables were not lost during the joining process. I pivot_longer Tidy1 to reduce the number of columns in the joined dataset. Because the two datasets had several similar variables, I dropped any variables that were repated. I joined the two data sets base on the id variable to ensure that the data was joined to each correct patient, and that no duplicate rows would form.</em></p>
+</div>
+<div id="section-2" class="section level3">
+<h3>3:</h3>
+<pre class="r"><code>Full_data1&lt;-Full_data%&gt;%mutate(apt.length=apt.stop-apt_start)%&gt;%
+  select(-apt.stop)%&gt;%select(-apt_start)%&gt;%
+  pivot_wider(names_from = &quot;transplant.&quot;,values_from = &quot;apt.length&quot;)%&gt;%
+  select(-not.rec)%&gt;%rename(&quot;followup&quot;=&quot;recieved&quot;)%&gt;%separate(accept.dt,&quot;accept.dt&quot;)%&gt;%
+  separate(tx.date,&quot;txdate&quot;)%&gt;%separate(last.dt,&quot;last.dt&quot;)
+
+Full_data1%&gt;%summarize(mean(AGE,na.rm = T), sd(AGE), min(AGE),max(AGE))</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##   `mean(AGE, na.rm = T)` `sd(AGE)` `min(AGE)` `max(AGE)`
+##                    &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+## 1                   45.2      9.80       8.79       64.4</code></pre>
+<pre class="r"><code>Full_data1%&gt;%summarize(mean(total.days, na.rm=T),sd(total.days), min(total.days),max(total.days))</code></pre>
+<pre><code>## # A tibble: 1 x 4
+##   `mean(total.days, na.rm =… `sd(total.days)` `min(total.days)` `max(total.days…
+##                        &lt;dbl&gt;            &lt;dbl&gt;             &lt;dbl&gt;            &lt;dbl&gt;
+## 1                       309.             428.                 0             1799</code></pre>
+<pre class="r"><code>Full_data1%&gt;%group_by(death)%&gt;%
+  summarise(mean(AGE))%&gt;%filter(death==1)</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##   death `mean(AGE)`
+##   &lt;chr&gt;       &lt;dbl&gt;
+## 1 1            46.7</code></pre>
+<pre class="r"><code>Full_data1%&gt;%group_by(death)%&gt;%
+  summarise(mean(AGE))%&gt;%filter(death==0)</code></pre>
+<pre><code>## # A tibble: 1 x 2
+##   death `mean(AGE)`
+##   &lt;chr&gt;       &lt;dbl&gt;
+## 1 0            41.0</code></pre>
+<pre class="r"><code>Full_data1%&gt;%group_by(death)%&gt;%
+  summarize(mean(total.days, na.rm=T),n_distinct(total.days), sd(total.days))</code></pre>
+<pre><code>## # A tibble: 2 x 4
+##   death `mean(total.days, na.rm = T)` `n_distinct(total.days)` `sd(total.days)`
+##   &lt;chr&gt;                         &lt;dbl&gt;                    &lt;int&gt;            &lt;dbl&gt;
+## 1 0                              681.                       28             528.
+## 2 1                              170.                       62             281.</code></pre>
+<pre class="r"><code>Full_data1%&gt;%group_by(accept.dt,last.dt)%&gt;%summarize(mean(AGE, na.rm=T),n_distinct(AGE)) %&gt;%arrange(accept.dt)%&gt;%glimpse()</code></pre>
+<pre><code>## Observations: 24
+## Variables: 4
+## Groups: accept.dt [8]
+## $ accept.dt              &lt;chr&gt; &quot;1967&quot;, &quot;1967&quot;, &quot;1968&quot;, &quot;1968&quot;, &quot;1968&quot;, &quot;1968&quot;…
+## $ last.dt                &lt;chr&gt; &quot;1967&quot;, &quot;1968&quot;, &quot;1968&quot;, &quot;1969&quot;, &quot;1970&quot;, &quot;1972&quot;…
+## $ `mean(AGE, na.rm = T)` &lt;dbl&gt; 39.315537, 30.844627, 46.762687, 48.714579, 50…
+## $ `n_distinct(AGE)`      &lt;int&gt; 1, 1, 14, 2, 1, 1, 7, 1, 3, 1, 3, 7, 1, 2, 7, …</code></pre>
+<pre class="r"><code>Full_data1%&gt;%na.omit%&gt;%summarize(cor(total.days, followup))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   `cor(total.days, followup)`
+##                         &lt;dbl&gt;
+## 1                       0.994</code></pre>
+<pre class="r"><code>Full_data1%&gt;%na.omit%&gt;%summarize(cor(total.days, wait.time))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   `cor(total.days, wait.time)`
+##                          &lt;dbl&gt;
+## 1                       0.0329</code></pre>
+<p><em>When creating a new variable, I used mutate to create a new variable that detailed the number of days from the transplant surgery to the last appointment. To do this, I subtracted the stop and start variable and tidy the data. For the summary statistics, I calculated the mean, sd, min, and max for age and total days of study. Grouping by patient death, I calculated the mean age and the mean, sd, and n_distinct for total days. Grouping by the start date and last date, I calculated the mean and n_distinct of age. Lastly, I calculated the correlation between total days to followup time and waittime. Base on the statistics, we can see that he oldest patient was 64 and the youngest was 8. The longest study length was 1799 days, while the shortest was zero. In general,patients who died had a slightly higher mean age. Patients who survived heart surgery had longer study times compared to their counterparts. Lastly, followup time has a stronger correlation to total time than wait time. This shows that followup days are greater than wait days.</em></p>
+</div>
+<div id="section-3" class="section level3">
+<h3>4:</h3>
+<pre class="r"><code>heat&lt;-Full_data1%&gt;%na.omit%&gt;%select_if(is.numeric)
+cor(heat)</code></pre>
+<pre><code>##                    AGE  total.days   wait.time    followup
+## AGE         1.00000000 -0.13221828  0.01183281 -0.13320638
+## total.days -0.13221828  1.00000000  0.03287919  0.99397417
+## wait.time   0.01183281  0.03287919  1.00000000 -0.07687414
+## followup   -0.13320638  0.99397417 -0.07687414  1.00000000</code></pre>
+<pre class="r"><code>tidycor&lt;-cor(heat)%&gt;%as.data.frame%&gt;%rownames_to_column%&gt;%
+pivot_longer(-1,names_to=&quot;name&quot;,values_to=&quot;correlation&quot;)
+head(tidycor)</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   rowname    name       correlation
+##   &lt;chr&gt;      &lt;chr&gt;            &lt;dbl&gt;
+## 1 AGE        AGE             1     
+## 2 AGE        total.days     -0.132 
+## 3 AGE        wait.time       0.0118
+## 4 AGE        followup       -0.133 
+## 5 total.days AGE            -0.132 
+## 6 total.days total.days      1</code></pre>
+<pre class="r"><code>tidycor%&gt;%ggplot(aes(rowname,name,fill=correlation))+geom_tile()+
+  geom_text(aes(label=round(correlation,2)))+ xlab(&quot;&quot;)+ylab(&quot;&quot;)+
+  ggtitle(&quot;Correlation between Age, wait, followup, total time&quot;)</code></pre>
+<p><img src="../project1a_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Full_data1%&gt;%ggplot(aes(x=death,fill=prior.trans))+
+  geom_bar(aes(y=AGE),stat=&quot;summary&quot;,fun.y=&quot;mean&quot;)+
+  scale_y_continuous(breaks=seq(0,100,10))+
+  ggtitle(&quot;Patient survival&quot;)+ylab(&quot;average age&quot;)</code></pre>
+<p><img src="../project1a_files/figure-html/unnamed-chunk-5-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>Full_data1%&gt;%ggplot(aes(AGE,total.days,color=death))+
+  geom_point()+ggtitle(&quot;Study Duration and Age&quot;)+
+  xlab(&quot;Patient age&quot;)+ylab(&quot;Study duration&quot;)+
+  theme(legend.position=c(.9,.9))+
+  scale_color_manual(values=c(&quot;red&quot;,&quot;green&quot;))</code></pre>
+<p><img src="../project1a_files/figure-html/unnamed-chunk-5-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><em>Base on the heatmap, the data shows that age is not strongly correlated to any of the dates. This was expected as age was relatively unrelated the the procedure length. Followup date has a strong correlation to total days, while a weak correlation to wait time. This is also expected because the followup days are generally greater compared to the days before the surgery.This means that the majorily of appointments (days) were after the surgery. Wait time also had a weak correlation to total time. The second plot shows the mean age of patient who lived or died and if they had prior heart transplants. Survivors had a lower average age. Both groups had about 40-50% of people with prior heart transplants. The third plot shows the age of the patient, their total days, and their survival. Patients who lived had longer total days as expected. Most patients were between the ages of 40-60.</em></p>
+</div>
+<div id="section-4" class="section level3">
+<h3>5:</h3>
+<pre class="r"><code>library(cluster)
+library(GGally)
+Pam1&lt;-Full_data1%&gt;%select(total.days,wait.time,followup)%&gt;%pam(3)
+Pam1</code></pre>
+<pre><code>## Medoids:
+##      ID total.days wait.time followup
+## [1,] 70         29         4       25
+## [2,] 86        396         7      389
+## [3,] 49       1141        35     1106
+## Clustering vector:
+##   [1] 1 1 1 1 1 1 2 1 1 1 1 1 1 3 1 2 1 1 1 1 3 1 2 1 3 3 2 1 1 3 1 1 3 3 1 1 1
+##  [38] 1 1 3 3 1 1 1 1 3 1 1 3 3 2 1 1 1 1 3 1 2 3 1 1 1 3 2 1 1 2 1 2 1 2 2 1 1
+##  [75] 1 2 1 2 1 2 2 2 1 2 1 2 1 2 1 1 2 1 2 1 1 1 1 1 1 1
+##  [ reached getOption(&quot;max.print&quot;) -- omitted 3 entries ]
+## Objective function:
+##    build     swap 
+## 157.6361 139.5472 
+## 
+## Available components:
+##  [1] &quot;medoids&quot;    &quot;id.med&quot;     &quot;clustering&quot; &quot;objective&quot;  &quot;isolation&quot; 
+##  [6] &quot;clusinfo&quot;   &quot;silinfo&quot;    &quot;diss&quot;       &quot;call&quot;       &quot;data&quot;</code></pre>
+<pre class="r"><code>final &lt;- Full_data1 %&gt;% mutate(cluster = as.factor(Pam1$clustering))
+confmat &lt;- final %&gt;% group_by(death) %&gt;% count(cluster) %&gt;% arrange(desc(n)) %&gt;% 
+ pivot_wider(names_from = &quot;cluster&quot;, values_from = &quot;n&quot;, values_fill =  list(&#39;n&#39; = 0))
+confmat</code></pre>
+<pre><code>## # A tibble: 2 x 4
+## # Groups:   death [2]
+##   death   `1`   `2`   `3`
+##   &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+## 1 1        60    10     5
+## 2 0         7    11    10</code></pre>
+<pre class="r"><code>round(sum(diag(as.matrix(confmat[, 2:4])))/sum(confmat[, 2:4]), 4)</code></pre>
+<pre><code>## [1] 0.6893</code></pre>
+<pre class="r"><code>ggplot(final, aes(x = wait.time, y = followup,  color = cluster)) + geom_point()</code></pre>
+<p><img src="../project1a_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>final%&gt;%ggpairs(columns=c(&quot;wait.time&quot;,&quot;followup&quot;,&quot;total.days&quot;), aes(color=death))</code></pre>
+<p><img src="../project1a_files/figure-html/unnamed-chunk-6-2.png" width="672" style="display: block; margin: auto;" /> <em>When only looking at followup time and wait time, the clusters show that cluster 1 had the shortest followup time and cluster 3 had the longest followup time. All 3 clusters had relatively similar wait times. This is because wait time was short for most patients. When looking at total time, wait time, and followup time, followup time and total days had the most different cluster. This most likely occured because the two variables are highly correlated with one another. </em></p>
+<pre><code>## R version 3.4.4 (2018-03-15)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 18.04.4 LTS
+## 
+## Matrix products: default
+## BLAS: /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
+## LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.2.20.so
+## 
+## locale:
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## 
+## attached base packages:
+## [1] methods   stats     graphics  grDevices utils     datasets  base     
+## 
+## other attached packages:
+##  [1] GGally_1.4.0    cluster_2.0.6   forcats_0.4.0   stringr_1.4.0  
+##  [5] dplyr_0.8.3     purrr_0.3.3     readr_1.3.1     tidyr_1.0.0    
+##  [9] tibble_2.1.3    ggplot2_3.2.1   tidyverse_1.3.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] Rcpp_1.0.2         lubridate_1.7.4    lattice_0.20-35    assertthat_0.2.1  
+##  [5] zeallot_0.1.0      digest_0.6.20      utf8_1.1.4         R6_2.4.0          
+##  [9] cellranger_1.1.0   plyr_1.8.4         backports_1.1.4    reprex_0.3.0      
+## [13] evaluate_0.14      httr_1.4.1         blogdown_0.18      pillar_1.4.2      
+## [17] rlang_0.4.2        lazyeval_0.2.2     readxl_1.3.1       rstudioapi_0.10   
+## [21] Matrix_1.2-12      rmarkdown_2.1      labeling_0.3       splines_3.4.4     
+## [25] munsell_0.5.0      broom_0.5.2        compiler_3.4.4     modelr_0.1.5      
+## [29] xfun_0.13          pkgconfig_2.0.2    htmltools_0.3.6    tidyselect_0.2.5  
+## [33] bookdown_0.18      reshape_0.8.7      fansi_0.4.0        crayon_1.3.4      
+## [37] dbplyr_1.4.2       withr_2.1.2        grid_3.4.4         nlme_3.1-131      
+## [41] jsonlite_1.6       gtable_0.3.0       lifecycle_0.1.0    DBI_1.0.0         
+## [45] magrittr_1.5       scales_1.0.0       cli_1.1.0          stringi_1.4.3     
+## [49] reshape2_1.4.3     fs_1.3.1           xml2_1.2.2         ellipsis_0.2.0.1  
+## [53] generics_0.0.2     vctrs_0.2.1        RColorBrewer_1.1-2 tools_3.4.4       
+## [57] glue_1.3.1         hms_0.5.3          survival_2.41-3    yaml_2.2.0        
+## [61] colorspace_1.4-1   rvest_0.3.5        knitr_1.28         haven_2.2.0</code></pre>
+<pre><code>## [1] &quot;2020-05-13 22:24:32 CDT&quot;</code></pre>
+<pre><code>##                                        sysname 
+##                                        &quot;Linux&quot; 
+##                                        release 
+##                            &quot;4.15.0-99-generic&quot; 
+##                                        version 
+## &quot;#100-Ubuntu SMP Wed Apr 22 20:32:56 UTC 2020&quot; 
+##                                       nodename 
+##                   &quot;educcomp04.ccbb.utexas.edu&quot; 
+##                                        machine 
+##                                       &quot;x86_64&quot; 
+##                                          login 
+##                                      &quot;unknown&quot; 
+##                                           user 
+##                                       &quot;rcn468&quot; 
+##                                 effective_user 
+##                                       &quot;rcn468&quot;</code></pre>
+</div>
+
+              <hr>
+              <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div>
+            </div>
+          </div>
+          <hr>
+        <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+        </div>
+      </div>
+      
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="../js/docs.min.js"></script>
+<script src="../js/main.js"></script>
+
+<script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>

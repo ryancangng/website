@@ -1,0 +1,253 @@
+---
+title: "Project 2"
+author: "Ryan Nguyen"
+date: "05/1/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, fig.align = "center", warning = F, message = F, R.options=list(max.print=100))
+```
+
+
+
+### 0: Introduction
+```{R}
+library(tidyverse)
+library(dplyr)
+Heart1<-survival::jasa
+Heart2<-survival::jasa1
+Tidy1<-Heart2%>%mutate(AGE = age + 48)%>%select(-age)%>%mutate(YEAR = year+1967)%>%
+  pivot_wider(names_from = "transplant",values_from = "YEAR")%>%
+  rename("recieved"="1","not.rec"="0","apt_start"="start","apt.stop"="stop")%>%
+  select(-event)%>%select(-year)
+Tidy2<-Heart1%>%mutate(id=row.names(Heart1))%>%mutate(id=as.character(id))%>%
+  rename("death"="fustat")%>%
+  rename("prior.trans"="surgery","total.days"="futime","last.dt"="fu.date")%>%
+  select(-mismatch)%>%select(-hla.a2)%>%select(-mscore)%>%
+  mutate(death=as.character(death))%>%mutate(reject=as.character(reject))%>%
+  mutate(prior.trans=as.character(prior.trans))
+Tidy1<-Tidy1%>%pivot_longer(cols=c("recieved","not.rec"),names_to = "transplant.",values_to = "year")%>%na.omit()%>%mutate(id=as.character(id))
+
+Full_data<-Tidy1%>%full_join(Tidy2, by="id")%>%
+  select(-year)%>%select(-surgery)%>%select(-transplant)%>%select(-age)
+Full_data<-Full_data%>%mutate(apt.length=apt.stop-apt_start)%>%
+  select(-apt.stop)%>%select(-apt_start)%>%
+  pivot_wider(names_from = "transplant.",values_from = "apt.length")%>%
+  select(-not.rec)%>%rename("followup"="recieved")%>%separate(accept.dt,"accept.dt")%>%
+  separate(tx.date,"txdate")%>%separate(last.dt,"last.dt")
+
+```
+*For this project, I am examining the jasa and jasa1 datasets, detailing information from Stanford's heart transplant program in 1977. I previously used these datasets for the first project, tidied the datasets, and combined them to produced a full dataset. The variables in this dataset are patient ID, age, birthdate, acceptance date, treatment date, death occurence, prior transplant, total days, wait time, rejection, and followup time. In total, there are 12 variables with 103 observations*
+
+---
+
+### 1:
+```{R}
+Full_data$death<-as.factor(Full_data$death)
+
+ggplot(Full_data, aes(x = AGE, y = total.days)) +
+  geom_point(alpha = 1) + geom_density_2d(h=10) + facet_wrap(~death)
+
+man<-manova(cbind(AGE,total.days)~death, data=Full_data)
+summary(man)
+summary.aov(man)
+Full_data%>%group_by(death)%>%summarize(mean(AGE),mean(total.days))
+pairwise.t.test(Full_data$AGE,Full_data$death,
+                p.adj="none")
+pairwise.t.test(Full_data$total.days,Full_data$death,
+                p.adj="none")
+1-(0.95^5)
+0.05/5 
+
+```
+*For the MANOVA test, I tested whether age and total days of treatment show a mean difference across patient's death. The p-value of the MANOVA test was significant (<0.0005), meaning that there is at least one mean difference. Because the result was significant, two more univariate ANOVAs were done, both of which were significant. Two post-hoc t-tests were done, both of which were significant. This means that both groups, patients who lived and patients who died, had significant differences. The type error rate was 0.226 and the bonferroni correction changed the significance level to 0.01. All tests were still significant with the correction. For the assumptions of the MANOVA, we are assuming that observations are independent and samples are random. The MANOVA assumes that multivariate normality and equal variance between DVs. The ANOVAs assume that each group has normality and equal variance for DV within each group. The last assumptions are linear DV relationships, no outliers, and no mulitcollinearity. Because the MANOVA and ANOVAs were significant, it is assumed that most assumptions were met. However, multivariate normality was probably not met base on the plot.* 
+
+---
+
+### 2: 
+```{R}
+set.seed(348)
+rand_dist<-vector()
+for(i in 1:5000){ 
+new<-data.frame(age=sample(Full_data$AGE),death=Full_data$death)
+rand_dist[i]<-mean(new[new$death==1,]$age)-
+mean(new[new$death==0,]$age)}
+mean(Full_data[Full_data$death==1,]$AGE)-mean(Full_data[Full_data$death==0,]$AGE)
+mean(rand_dist>5.737035 | rand_dist< -5.737035)
+
+ggplot(Full_data,aes(AGE,fill=death))+geom_histogram(bins=6.5)+
+  facet_wrap(~death,ncol=2)+theme(legend.position="none")
+{hist(rand_dist,main="",ylab=""); abline(v = -5.737035,col="red"); abline(v = 5.737035,col="red")}
+```
+*I completed a randomized two tailed t-test, looking at the mean difference in age of patients who died and patients who lived. The null hypothesis is that there are no significant difference in age between patients who died and patients who lived. The alternative hypothesis is that there is a sigificant difference in age between the two groups. Randomization was done 5000 times and resulted in a p-value of 0.0068. This means that the null hypothesis is rejected, and that there is a significant difference in age of patients who died compared to patients who survived.*
+
+### 3:
+
+```{R}
+library(lmtest)
+library(sandwich)
+
+Full_data1<-Full_data%>%mutate(age_c=AGE-mean(AGE,na.rm=T))
+
+fit<-lm(total.days~death*age_c, data=Full_data1)
+summary(fit)
+coeftest(fit)
+
+ggplot(Full_data1,aes(age_c,total.days))+
+  geom_point(aes(color=death))+
+  geom_smooth(method = 'lm',se=F,fullrange=T, aes(color=death))
+
+ggplot(Full_data,aes(AGE, total.days))+geom_point()
+resids<-fit$residuals
+shapiro.test(resids)
+ggplot()+geom_histogram(aes(resids)) 
+fitted<-fit$fitted.values
+ggplot()+geom_point(aes(resids,fitted))
+bptest(fit)
+
+coeftest(fit, vcov=vcovHC(fit))
+
+(sum((Full_data$total.days-mean(Full_data$total.days))^2)-sum(fit$residuals^2))/
+  sum((Full_data$total.days-mean(Full_data$total.days))^2)
+```
+*I ran a linear regression predicting the total days of treatment from death and mean centered age. The coefficients were 688.517 for the intercept,-519.883 for death occurance (1), 1.714 for centered age, and -0.641 for the interaction. This means that the occurance of death has a strong relationship with days of treatment, while age and age of deceased patients had weak relationships.. Checking the assumptions, linearity was unmet when the data was ploted. Doing a shapiro-wilk test and ploting the residuals show that normality was not met. Doing a Breuch-pagan test and plotting residuals and fitted values show that homoskedasticity is also not met. Although most of the assumptions were not met, the regression was recompute with robust standard errors. With the robust standard error, death was still a significant indicator of total days but age and the interaction were still not significant. The coefficients for all factors increased with the robust standard error. The standard errors also all increased. The model explains 0.285 variation in the outcome.*
+
+### 4:
+
+```{R}
+samp_distn<-replicate(5000, {
+  boot_dat<-sample_frac(Full_data1, replace=T) 
+  fit<-lm(total.days~death*age_c,data=boot_dat) 
+  coef(fit)
+})
+samp_distn %>% t %>% as.data.frame %>% summarize_all(sd)
+```
+*With the bootstrapped standard errors, these standard errors are lower compared to the robust standard errors, but higher than the original standard errors. This means that the p-value most likely did not change, because the bootstrapped standard errors are similar to the robust standard errors.*
+
+### 5:
+```{R}
+library(plotROC)
+library(glmnet)
+
+Full_data1<-Full_data1%>%mutate(days_c=total.days-mean(total.days,na.rm=T))
+fit1<-glm(death~AGE+total.days, data=Full_data1, family=binomial(link="logit"))
+summary(fit1)
+coeftest(fit1)
+prob<-predict(fit1,type="response")
+pred<-ifelse(prob>.5,1,0)
+table(prediction=pred,truth=Full_data$death)%>%addmargins
+(12+68)/103 ##acc
+68/84 ##ppv
+68/75 ##tpr
+12/28 ##tnr
+
+plot1<-Full_data%>%mutate(logit=predict(fit1,type="link"))
+ggplot(plot1,aes(logit, fill=death))+geom_density(alpha=.3)+
+  geom_vline(xintercept=0,lty=2)
+
+class_diag<-function(probs,truth){
+  tab<-table(factor(probs>.5,levels=c("FALSE","TRUE")),truth)
+  acc=sum(diag(tab))/sum(tab)
+  sens=tab[2,2]/colSums(tab)[2]
+  spec=tab[1,1]/colSums(tab)[1]
+  ppv=tab[2,2]/rowSums(tab)[2]
+  if(is.numeric(truth)==FALSE & is.logical(truth)==FALSE) truth<-as.numeric(truth)-1
+  ord<-order(probs, decreasing=TRUE)
+  probs <- probs[ord]; truth <- truth[ord]
+  TPR=cumsum(truth)/max(1,sum(truth)) 
+  FPR=cumsum(!truth)/max(1,sum(!truth))
+  dup<-c(probs[-1]>=probs[-length(probs)], FALSE)
+  TPR<-c(0,TPR[!dup],1); FPR<-c(0,FPR[!dup],1)
+  n <- length(TPR)
+  auc<- sum( ((TPR[-1]+TPR[-n])/2) * (FPR[-1]-FPR[-n])) 
+  data.frame(acc,sens,spec,ppv,auc)
+}
+
+class_diag(prob,Full_data1$death)
+
+Full_data1<-Full_data1%>%
+  mutate(death. = ifelse(death=="1",1,0))
+
+ROCplot<-ggplot(Full_data1)+geom_roc(aes(d=death.,m=prob), n.cuts=0)
+ROCplot
+calc_auc(ROCplot)
+
+set.seed(1234)
+k=10
+data <- Full_data1 %>% sample_frac 
+folds <- ntile(1:nrow(data),n=10) 
+
+diags<-NULL
+for(i in 1:k){
+  train <- data[folds!=i,] 
+  test <- data[folds==i,] 
+  truth <- test$death. 
+  
+  fit <- glm(death.~AGE+total.days, data=train, family="binomial")
+  probs <- predict(fit, newdata=test, type="response")
+  
+  diags<-rbind(diags,class_diag(probs,truth))
+}
+
+summarize_all(diags,mean)
+
+```
+*I ran a logistic regression predicting death from age and total days of treatment. The coefficients from the regression were -0.565 for the intercept, 0.06 for age, and -0.003 for total days.   For the confusion matrix, the accuracy was 0.777, ppv was 0.81, tpr (sensitivity) was 0.907, and tnr (specificity) 0.429. The AUC was calculated to be 0.868. An AUC of 0.868 means that the age and total days are good predictors of death. Doing a 10-fold CV, the accuracy was 0.776, sensitivity was 0.896, ppv was 0.827, specificity was 0.473, and AUC was 0.888.*
+
+### 6:
+```{R}
+Full_data[is.na(Full_data)] = 0
+lasso<-Full_data%>%select(-id)
+y<-as.matrix(lasso$death)
+x<-model.matrix(death~.,data=lasso)[,-1] 
+set.seed(1234)
+cv<-cv.glmnet(x,y,family="binomial")
+lasso1<-glmnet(x,y,family="binomial", lambda=cv$lambda.1se)
+coef(lasso1)
+
+Full_data<-Full_data%>%
+  mutate(a1971 = ifelse(accept.dt=="1971",1,0))%>%
+  mutate(a1973 = ifelse(accept.dt=="1973",1,0))%>%
+  mutate(a1974 = ifelse(accept.dt=="1974",1,0))%>%
+  mutate(tx1973 = ifelse(txdate=="1973",1,0))%>%
+  mutate(tx1974 = ifelse(txdate=="1974",1,0))%>%
+  mutate(l1973 = ifelse(last.dt=="1973",1,0))%>%
+  mutate(l1974 = ifelse(last.dt=="1974",1,0))%>%
+  mutate(death. = ifelse(death=="1",1,0))
+
+
+set.seed(1234)
+k=10
+data <- Full_data %>% sample_frac 
+folds <- ntile(1:nrow(data),n=10) 
+
+diags<-NULL
+for(i in 1:k){
+  train <- data[folds!=i,] 
+  test <- data[folds==i,] 
+  truth <- test$death. 
+  
+  fit <- glm(death.~birth.dt+prior.trans+total.days+reject+
+               a1971+a1973+a1974+tx1973+tx1974+l1973+l1974, data=train, family="binomial")
+  probs <- predict(fit, newdata=test, type="response")
+  
+  diags<-rbind(diags,class_diag(probs,truth))
+}
+
+summarize_all(diags,mean)
+
+
+```
+*From running a lasso regression, the predictors for death were the acceptance dates of (1971,1973,1974), the treatment dates of (1973,1974), the last date of (1973,1974), birth date, prior translant, total days, and rejection. Running a 10 fold CV with the significant predictors, the results were an accuracy of 0.951, sensitivity of 0.962, spec of 0.867, ppv or 0.978, and AUC of 0.922. Compared to the previous logisistic regression, the results were much better. The accuracy and AUC were much higher in this model compared to the previous. The variable of total days was from the previous model was still found to be a significant predictor.*
+
+
+
+```{R, echo=F}
+## DO NOT DELETE THIS BLOCK!
+sessionInfo()
+Sys.time()
+Sys.info()
+```

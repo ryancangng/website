@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1589416007171.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "65AD1014",
+    "lastKnownWriteTime" : 1589427728,
+    "last_content_update" : 1589427728154,
+    "path" : "~/rcn468website/config.toml",
+    "project_path" : "config.toml",
+    "properties" : {
+        "cursorPosition" : "22,29",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "toml"
+}

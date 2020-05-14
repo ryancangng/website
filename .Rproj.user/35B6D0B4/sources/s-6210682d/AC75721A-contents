@@ -1,0 +1,147 @@
+---
+title: "Project 1"
+author: "Ryan Nguyen"
+date: "03/15/2020"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, fig.align = "center", warning = F, message = F, R.options=list(max.print=100))
+```
+
+
+
+### 0: Introduction
+```{R}
+library(tidyverse)
+Heart1<-survival::jasa
+Heart2<-survival::jasa1
+glimpse(Heart1)
+glimpse(Heart2)jj
+
+```
+*For this project, I chose to examine the jasa dataset, detailing information from Stanford's heart transplant program in 1977. This dataset was acquired from the survival pagckage within the R-database. The variables in jasa are birthdate, acceptance date, transplant date, last followup date, death of patient (fustat), prior heart transplant (surgery), patient age, total days in study (futime), wait time for transplant(by days), tranplant completed, and several mismatch statistical scores. For jasa1, the variables are patient id, the start and stop of periodic appointments (by days), completion of study (event), surgery completion, age minus 48, year since 1967, and prior transplant. The information on this dataset was acquired both through Rstudio and base on the original research paper. I chose this dataset because I found the information to be interesting and related my future profession. In general, the two datasets provided distinct information and will complement each other well.*
+
+---
+
+### 1:
+```{R}
+library(dplyr)
+
+Tidy1<-Heart2%>%mutate(AGE = age + 48)%>%select(-age)%>%mutate(YEAR = year+1967)%>%
+  pivot_wider(names_from = "transplant",values_from = "YEAR")%>%
+  rename("recieved"="1","not.rec"="0","apt_start"="start","apt.stop"="stop")%>%
+  select(-event)%>%select(-year)
+Tidy2<-Heart1%>%mutate(id=row.names(Heart1))%>%mutate(id=as.character(id))%>%
+  rename("death"="fustat")%>%
+  rename("prior.trans"="surgery","total.days"="futime","last.dt"="fu.date")%>%
+  select(-mismatch)%>%select(-hla.a2)%>%select(-mscore)%>%
+  mutate(death=as.character(death))%>%mutate(reject=as.character(reject))%>%
+  mutate(prior.trans=as.character(prior.trans))
+glimpse(Tidy1)
+glimpse(Tidy2)
+```
+*While the datasets are already tidy, I wanted to adjust the datasets and reword the variables. For jasa1/Heart2, I added 48 to age and 1967 to year. This provided the actual age of the patient and the start year. I pivot_wider the transplant variable to provide a better visual on which patient recieved a transplant and their respective start year. I renamed some of the variables to improve description. For jasa/Heart1, I created a column for patient id because this dataset lacked this information. I renamed certain variables and corrected categorical variables that were coded as numeric. Lastly, I removed the mismatch statistics from this dataset because they were uneeded for the dataset.* 
+
+---
+
+### 2: 
+```{R}
+Tidy1<-Tidy1%>%pivot_longer(cols=c("recieved","not.rec"),names_to = "transplant.",values_to = "year")%>%na.omit()%>%mutate(id=as.character(id))
+
+Full_data<-Tidy1%>%full_join(Tidy2, by="id")%>%
+  select(-year)%>%select(-surgery)%>%select(-transplant)%>%select(-age)
+glimpse(Full_data)
+
+```
+*To join the datasets, I used full_join to ensure that variables were not lost during the joining process. I pivot_longer Tidy1 to reduce the number of columns in the joined dataset. Because the two datasets had several similar variables, I dropped any variables that were repated. I joined the two data sets base on the id variable to ensure that the data was joined to each correct patient, and that no duplicate rows would form.*
+
+### 3:
+
+```{R}
+Full_data1<-Full_data%>%mutate(apt.length=apt.stop-apt_start)%>%
+  select(-apt.stop)%>%select(-apt_start)%>%
+  pivot_wider(names_from = "transplant.",values_from = "apt.length")%>%
+  select(-not.rec)%>%rename("followup"="recieved")%>%separate(accept.dt,"accept.dt")%>%
+  separate(tx.date,"txdate")%>%separate(last.dt,"last.dt")
+
+Full_data1%>%summarize(mean(AGE,na.rm = T), sd(AGE), min(AGE),max(AGE))
+Full_data1%>%summarize(mean(total.days, na.rm=T),sd(total.days), min(total.days),max(total.days))
+
+Full_data1%>%group_by(death)%>%
+  summarise(mean(AGE))%>%filter(death==1)
+Full_data1%>%group_by(death)%>%
+  summarise(mean(AGE))%>%filter(death==0)
+Full_data1%>%group_by(death)%>%
+  summarize(mean(total.days, na.rm=T),n_distinct(total.days), sd(total.days))
+
+Full_data1%>%group_by(accept.dt,last.dt)%>%summarize(mean(AGE, na.rm=T),n_distinct(AGE)) %>%arrange(accept.dt)%>%glimpse()
+
+Full_data1%>%na.omit%>%summarize(cor(total.days, followup))
+Full_data1%>%na.omit%>%summarize(cor(total.days, wait.time))
+
+```
+
+*When creating a new variable, I used mutate to create a new variable that detailed the number of days from the transplant surgery to the last appointment. To do this, I subtracted the stop and start variable and tidy the data. For the summary statistics, I calculated the mean, sd, min, and max for age and total days of study. Grouping by patient death, I calculated the mean age and the mean, sd, and n_distinct for total days. Grouping by the start date and last date, I calculated the mean and n_distinct of age. Lastly, I calculated the correlation between total days to followup time and waittime. Base on the statistics, we can see that he oldest patient was 64 and the youngest was 8. The longest study length was 1799 days, while the shortest was zero. In general,patients who died had a slightly higher mean age. Patients who survived heart surgery had longer study times compared to their counterparts. Lastly, followup time has a stronger correlation to total time than wait time. This shows that followup days are greater than wait days.*
+
+
+### 4:
+
+```{R}
+
+heat<-Full_data1%>%na.omit%>%select_if(is.numeric)
+cor(heat)
+tidycor<-cor(heat)%>%as.data.frame%>%rownames_to_column%>%
+pivot_longer(-1,names_to="name",values_to="correlation")
+head(tidycor)
+
+tidycor%>%ggplot(aes(rowname,name,fill=correlation))+geom_tile()+
+  geom_text(aes(label=round(correlation,2)))+ xlab("")+ylab("")+
+  ggtitle("Correlation between Age, wait, followup, total time")
+
+
+Full_data1%>%ggplot(aes(x=death,fill=prior.trans))+
+  geom_bar(aes(y=AGE),stat="summary",fun.y="mean")+
+  scale_y_continuous(breaks=seq(0,100,10))+
+  ggtitle("Patient survival")+ylab("average age")
+ 
+Full_data1%>%ggplot(aes(AGE,total.days,color=death))+
+  geom_point()+ggtitle("Study Duration and Age")+
+  xlab("Patient age")+ylab("Study duration")+
+  theme(legend.position=c(.9,.9))+
+  scale_color_manual(values=c("red","green"))
+  
+```
+
+*Base on the heatmap, the data shows that age is not strongly correlated to any of the dates. This was expected as age was relatively unrelated the the procedure length. Followup date has a strong correlation to total days, while a weak correlation to wait time. This is also expected because the followup days are generally greater compared to the days before the surgery.This means that the majorily of appointments (days) were after the surgery. Wait time also had a weak correlation to total time. The second plot shows the mean age of patient who lived or died and if they had prior heart transplants. Survivors had a lower average age. Both groups had about 40-50% of people with prior heart transplants. The third plot shows the age of the patient, their total days, and their survival. Patients who lived had longer total days as expected. Most patients were between the ages of 40-60.*
+
+### 5:
+```{R}
+library(cluster)
+library(GGally)
+Pam1<-Full_data1%>%select(total.days,wait.time,followup)%>%pam(3)
+Pam1
+
+final <- Full_data1 %>% mutate(cluster = as.factor(Pam1$clustering))
+confmat <- final %>% group_by(death) %>% count(cluster) %>% arrange(desc(n)) %>% 
+ pivot_wider(names_from = "cluster", values_from = "n", values_fill =  list('n' = 0))
+confmat
+
+round(sum(diag(as.matrix(confmat[, 2:4])))/sum(confmat[, 2:4]), 4)
+
+ggplot(final, aes(x = wait.time, y = followup,  color = cluster)) + geom_point()
+final%>%ggpairs(columns=c("wait.time","followup","total.days"), aes(color=death))
+```
+*When only looking at followup time and wait time, the clusters show that cluster 1 had the shortest followup time and cluster 3 had the longest followup time. All 3 clusters had relatively similar wait times. This is because wait time was short for most patients. When looking at total time, wait time, and followup time,  followup time and total days had the most different cluster. This most likely occured because the two variables are highly correlated with one another. *
+
+
+
+
+```{R, echo=F}
+## DO NOT DELETE THIS BLOCK!
+sessionInfo()
+Sys.time()
+Sys.info()
+```

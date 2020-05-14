@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ryan Nguyen portfolio</title>
+    <link>/</link>
+    <description>Recent content on Ryan Nguyen portfolio</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Fri, 02 Oct 2020 22:55:05 -0400</lastBuildDate>
+    
+	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Projects</title>
+      <link>/projects/</link>
+      <pubDate>Fri, 02 Oct 2020 22:55:05 -0400</pubDate>
+      
+      <guid>/projects/</guid>
+      <description>Projects Here are two statistic projects I have recently completed:
+  Exploratory Data Analysis with Tidyverse Tools
+  Modeling, Testing, and Classification
+  </description>
+    </item>
+    
+    <item>
+      <title>Hello R Markdown</title>
+      <link>/blog/2015-07-23-r-rmarkdown/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      
+      <guid>/blog/2015-07-23-r-rmarkdown/</guid>
+      <description>R Markdown This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+You can embed an R code chunk like this:
+summary(cars) ## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.</description>
+    </item>
+    
+    <item>
+      <title>Creating a New Theme</title>
+      <link>/blog/creating-a-new-theme/</link>
+      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/creating-a-new-theme/</guid>
+      <description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
+We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
+    </item>
+    
+    <item>
+      <title>(Hu)go Template Primer</title>
+      <link>/blog/goisforlovers/</link>
+      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/goisforlovers/</guid>
+      <description>Hugo uses the excellent go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in go templates.
+This document is a brief primer on using go templates.</description>
+    </item>
+    
+    <item>
+      <title>Getting Started with Hugo</title>
+      <link>/blog/hugoisforlovers/</link>
+      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/hugoisforlovers/</guid>
+      <description>Step 1. Install Hugo Goto hugo releases and download the appropriate version for your os and architecture.
+Save it somewhere specific as we will be using it in the next step.
+More complete instructions are available at installing hugo
+Step 2. Build the Docs Hugo has its own example site which happens to also be the documentation site you are reading right now.
+Follow the following steps:
+ Clone the hugo repository Go into the repo Run hugo in server mode and build the docs Open your browser to http://localhost:1313  Corresponding pseudo commands:</description>
+    </item>
+    
+    <item>
+      <title>Migrate to Hugo from Jekyll</title>
+      <link>/blog/migrate-from-jekyll/</link>
+      <pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/migrate-from-jekyll/</guid>
+      <description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
+▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
+▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
+    </item>
+    
+    <item>
+      <title>Project 1</title>
+      <link>/project1/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project1/</guid>
+      <description>0: Introduction library(tidyverse) Heart1&amp;lt;-survival::jasa Heart2&amp;lt;-survival::jasa1 glimpse(Heart1) ## Observations: 103 ## Variables: 14 ## $ birth.dt &amp;lt;date&amp;gt; 1937-01-10, 1916-03-02, 1913-09-19, 1927-12-23, 1947-07-2… ## $ accept.dt &amp;lt;date&amp;gt; 1967-11-15, 1968-01-02, 1968-01-06, 1968-03-28, 1968-05-1… ## $ tx.date &amp;lt;date&amp;gt; NA, NA, 1968-01-06, 1968-05-02, NA, NA, 1968-08-31, NA, N… ## $ fu.date &amp;lt;date&amp;gt; 1968-01-03, 1968-01-07, 1968-01-21, 1968-05-05, 1968-05-2… ## $ fustat &amp;lt;dbl&amp;gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1… ## $ surgery &amp;lt;dbl&amp;gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0… ## $ age &amp;lt;dbl&amp;gt; 30.</description>
+    </item>
+    
+    <item>
+      <title>Project 2</title>
+      <link>/project2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/project2/</guid>
+      <description>0: Introduction library(tidyverse) library(dplyr) Heart1&amp;lt;-survival::jasa Heart2&amp;lt;-survival::jasa1 Tidy1&amp;lt;-Heart2%&amp;gt;%mutate(AGE = age + 48)%&amp;gt;%select(-age)%&amp;gt;%mutate(YEAR = year+1967)%&amp;gt;% pivot_wider(names_from = &amp;quot;transplant&amp;quot;,values_from = &amp;quot;YEAR&amp;quot;)%&amp;gt;% rename(&amp;quot;recieved&amp;quot;=&amp;quot;1&amp;quot;,&amp;quot;not.rec&amp;quot;=&amp;quot;0&amp;quot;,&amp;quot;apt_start&amp;quot;=&amp;quot;start&amp;quot;,&amp;quot;apt.stop&amp;quot;=&amp;quot;stop&amp;quot;)%&amp;gt;% select(-event)%&amp;gt;%select(-year) Tidy2&amp;lt;-Heart1%&amp;gt;%mutate(id=row.names(Heart1))%&amp;gt;%mutate(id=as.character(id))%&amp;gt;% rename(&amp;quot;death&amp;quot;=&amp;quot;fustat&amp;quot;)%&amp;gt;% rename(&amp;quot;prior.trans&amp;quot;=&amp;quot;surgery&amp;quot;,&amp;quot;total.days&amp;quot;=&amp;quot;futime&amp;quot;,&amp;quot;last.dt&amp;quot;=&amp;quot;fu.date&amp;quot;)%&amp;gt;% select(-mismatch)%&amp;gt;%select(-hla.a2)%&amp;gt;%select(-mscore)%&amp;gt;% mutate(death=as.character(death))%&amp;gt;%mutate(reject=as.character(reject))%&amp;gt;% mutate(prior.trans=as.character(prior.trans)) Tidy1&amp;lt;-Tidy1%&amp;gt;%pivot_longer(cols=c(&amp;quot;recieved&amp;quot;,&amp;quot;not.rec&amp;quot;),names_to = &amp;quot;transplant.&amp;quot;,values_to = &amp;quot;year&amp;quot;)%&amp;gt;%na.omit()%&amp;gt;%mutate(id=as.character(id)) Full_data&amp;lt;-Tidy1%&amp;gt;%full_join(Tidy2, by=&amp;quot;id&amp;quot;)%&amp;gt;% select(-year)%&amp;gt;%select(-surgery)%&amp;gt;%select(-transplant)%&amp;gt;%select(-age) Full_data&amp;lt;-Full_data%&amp;gt;%mutate(apt.length=apt.stop-apt_start)%&amp;gt;% select(-apt.stop)%&amp;gt;%select(-apt_start)%&amp;gt;% pivot_wider(names_from = &amp;quot;transplant.&amp;quot;,values_from = &amp;quot;apt.length&amp;quot;)%&amp;gt;% select(-not.rec)%&amp;gt;%rename(&amp;quot;followup&amp;quot;=&amp;quot;recieved&amp;quot;)%&amp;gt;%separate(accept.dt,&amp;quot;accept.dt&amp;quot;)%&amp;gt;% separate(tx.date,&amp;quot;txdate&amp;quot;)%&amp;gt;%separate(last.dt,&amp;quot;last.dt&amp;quot;) For this project, I am examining the jasa and jasa1 datasets, detailing information from Stanford’s heart transplant program in 1977. I previously used these datasets for the first project, tidied the datasets, and combined them to produced a full dataset.</description>
+    </item>
+    
+  </channel>
+</rss>
