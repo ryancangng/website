@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1589518360724.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1519194718",
+    "id" : "B8552936",
+    "lastKnownWriteTime" : 1589519519,
+    "last_content_update" : 1589519519287,
+    "path" : "~/rcn468website/content/about.Rmd",
+    "project_path" : "content/about.Rmd",
+    "properties" : {
+        "cursorPosition" : "3,17",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

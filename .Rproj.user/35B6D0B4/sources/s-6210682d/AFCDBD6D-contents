@@ -1,0 +1,163 @@
+---
+title: "HW 1"
+author: "SDS348 Spring 2020"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, fig.align = "center", warning = F, message = F, R.options=list(max.print=100))
+```
+
+## Ryan Nguyen, RCN468
+
+**This homework is due on Feb 2, 2020 at 11:59pm. Please submit as a pdf file on Canvas.**
+
+*For all questions, include the R commands/functions that you used to find your answer. Answers without supporting code will not receive credit.*
+
+> ### How to submit this assignment
+>All homework assignments will be completed using R Markdown. These `.Rmd` files consist of >text/syntax (formatted using Markdown) alongside embedded R code. 
+>When you have completed the assignment (by adding R code inside codeblocks and supporting text outside of the codeblocks), create your document as follows:
+
+> - Click the arrow next to the "Knit" button (above) 
+> - Choose "Knit to PDF"
+> - If this doesn't work, choose "Knit to HTML"
+> - Open the html file in your internet browser to view
+> - Go to `File > Print` and print your .html file to a .pdf
+> - Upload the .pdf file to Canvas
+
+---
+
+### Question 1: (2 pts)
+
+##### The dataset `faithful` contains information about eruptions of the Old Faithful geyser in Yellowstone National Park. The first few observations are listed below.
+
+```{R}
+head(faithful)
+```
+
+##### How many observations are there of each variable (i.e., how many rows are there)? What exactly do these variables measure (use `?` or `help()' on the dataset to look this up)? *Do not forget to include the code you used to answer these questions*
+
+```{R}
+summary(faithful)
+faithful[]
+#??faithful
+```
+
+*There are 272 observations (rows). The varibles measure the eruption times (in mins) and waiting time to next eruption (in mins).*
+
+---
+
+### Question 2: (4 pts)
+
+##### What are the minimum, maximum, mean, and median values for each variable? Note that there are many functions that can be used to answer this question. If you chose to work with each variable separately, recall that you can access individual variables in a dataframe using the `$` operator (e.g., `faithful$eruptions`).
+
+```{R}
+mean(faithful$eruptions)
+mean(faithful$waiting)
+median(faithful$eruptions)
+median(faithful$waiting)
+min(faithful$eruptions)
+min(faithful$waiting)
+max(faithful$eruptions)
+max(faithful$waiting)
+```
+
+*Eruptions had a mean of 3.488, median of 4, minimum of 1.6, maximum of 5.1. Waiting had a mean 70.897, median of 76, minimum of 43, maximum of 96. *
+
+---
+
+### Question 3: (6 pts)
+
+##### Recall how logical indexing of a dataframe works in R. To refresh your memory, in the example code below I ask R for the number of rows in the dataset where the variable `waiting` takes on values greater than 60. Then I ask for the average of the variable `eruptions` when the variable `waiting` is above 60.
+
+```{R}
+nrow(faithful[faithful$waiting>60,])
+mean(faithful[faithful$waiting>60,]$eruptions)
+```
+
+##### 3.1 (1 pt) What is the comma doing in the code above (i.e., why is it necessary)?
+
+*The comma is needed to define the arguments.*
+
+##### 3.2 (1 pt) What is the standard deviation of the variable `eruptions`?
+
+```{R}
+sd(faithful$eruptions)
+```
+
+*The standard deviation of eruptions is 1.141*
+
+##### 3.3 (2 pts) What is the standard deviation of the variable `eruptions` when `waiting` is *less than* the median? 
+
+```{R}
+median(faithful$waiting)
+faithful1<-faithful[faithful$waiting<76,]
+sd(faithful1$eruptions)
+```
+
+*When waiting is less than the median, the standard deviation of eruptions is 0.958*
+
+##### 3.4 (2 pts) What is the standard deviation of the variable `eruptions` when `waiting` is *greater than* the median?
+
+```{R}
+median(faithful$waiting)
+faithful2<-faithful[faithful$waiting>76,]
+sd(faithful2$eruptions)
+```
+
+*When waiting is greater than the median, the standard deviation of eruptions is 0.373*
+
+---
+
+### Question 4: (4 pts)
+
+##### Both variables are measured in minutes. Create two new variables named `eruptions_h` and `waiting_h` that give each variable **in hours rather than minutes** and add them to the dataset `faithful`. To help get you started, I have given you code that creates both variables but fills them with `NA` values. Replace `NA` below with code on the left-hand side that computes the requested transformation. Print out the first few rows of the updated dataset using `head()`.
+
+```{R}
+# update the code below
+faithful$eruptions_h<-faithful$eruptions/60
+faithful$waiting_h<-faithful$waiting/60
+head(faithful$eruptions_h)
+head(faithful$waiting_h)
+```
+
+
+### Question 5: (4 pts)
+
+##### Let's make some plots in base R. 
+
+##### 5.1 (1 pt) Create a boxplot of each variable using the `boxplot()` function.
+
+```{R}
+boxplot(faithful$eruptions)
+boxplot(faithful$waiting)
+```
+
+##### 5.2 (1 pt) Create a histogram of each variable using the `hist()` function. 
+
+```{R}
+hist(faithful$eruptions)
+hist(faithful$waiting)
+```
+
+##### 5.3 (1 pt) Create a scatterplot by plotting both variables against each other using the `plot()` function. Note that plot takes two arguments: the x-axis variable and the y-axis variable. 
+
+```{R}
+plot(x=faithful$eruptions, y=faithful$waiting,)
+```
+
+##### 5.4 (1 pt) What can you see from the scatterplot that you cannot see from the histograms? What can you see from the histogram that you cannot see from the boxplots? 
+
+*A scatter plot shows the relationship between the two variables, not shown in histograms. In a histogram, you can see the frequency, not shown in a boxplot. *
+
+
+
+```{R, echo=F}
+## DO NOT DELETE THIS BLOCK!
+sessionInfo()
+Sys.time()
+Sys.info()
+```

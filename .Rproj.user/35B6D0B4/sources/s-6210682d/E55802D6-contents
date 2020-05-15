@@ -1,0 +1,137 @@
+---
+title: "HW 3"
+author: "SDS348"
+date: ""
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE, fig.align = "center", warning = F, message = F,
+tidy=TRUE, tidy.opts=list(width.cutoff=60), R.options=list(max.print=100))
+```
+
+## RCN468 Ryan Nguyen 
+
+**This homework is due on Feb 16, 2020 at 11:59pm. Please submit as a pdf file on Canvas.**
+
+*For all questions, include the R commands/functions that you used to find your answer. Answers without supporting code will not receive credit.*
+
+> ### How to submit this assignment
+>All homework assignments will be completed using R Markdown. These `.Rmd` files consist of >text/syntax (formatted using Markdown) alongside embedded R code. 
+>When you have completed the assignment (by adding R code inside codeblocks and supporting text outside of the codeblocks), create your document as follows:
+
+> - Click the "Knit" button (above) to create an .html file
+> - Open the html file in your internet browser to view
+> - Go to `File > Print` and print your .html file to a .pdf
+> - (or knit to PDF)
+> - Upload the .pdf file to Canvas
+
+---
+
+### Question 1:
+
+##### (a) (1 pt) Assume diastolic blood pressure is normally distributed in a certain population, with a mean of 82 mmHg and a standard deviation 11 mmHg. What proportion of this population has a diastolic blood pressure less than 60 mmHg (i.e., what is the probability that a person in this population has a diastolic blood pressure less than 60)?
+
+```{R}
+library(tidyverse)
+pnorm(60,82,11)
+```
+
+*About 2.275% of the population have a diastolic blood pressure less than 60mmHg.*
+
+##### (b) (1 pt) What diastolic blood pressure would put an individual from this population at the 98th percentile?
+
+```{R}
+qnorm(.98,82,11)
+```
+
+*your answer here, 1-2 sentences*
+
+##### (c) (1 pt) What is the probability that a random individual from this population will have a diastolic blood pressure higher than 100? (Equivalently, what proportion of the population has a diastolic BP greater than 100 mmHg?)
+
+```{R}
+1-pnorm(100,82,11)
+```
+
+*About 5% of the population has a diastolic blood pressure greater than 100mmHg*
+
+
+##### (d) (1 pt) What proportion of the population has a diastolic blood pressure bewteen 80 and 90?
+
+```{R}
+pnorm(90,82,11)-pnorm(80,82,11)
+```
+
+*About 33% of the population has a diastolic blood pressure greater between 80mmHg and 90mmHg.*
+
+##### (e) (1 pt) Assume this is the distribution of diastolic blood pressure for a healthy population. If we observe an individual from an unknown population with a diastolic BP of 110 mmHg, what is the probability of observing an individual with a BP this extreme (i.e., in *either direction of the mean*) if the individual really came from a normal population with a mean of 82 and standard deviation of 11?
+
+```{R}
+(1-pnorm(110,82,11))*2
+```
+
+*There is about a 1% probability of having a diastilic blood pressure as extreme as 110mmHg (in either direction of the mean)*
+
+
+### Question 2
+
+Now, set the seed to 348 with `set.seed()`. Then, with `rnorm` take a sample of size 10,000 from a normal distribution with a mean of 82 and a standard deviation of 11.
+
+##### (a) (3 pts) Using sum() on a logical vector, how many draws are less than 60? Using mean() on a logical vector, what proportion of the total draws is that? How far is your answer from pnorm() in 1.1 above?
+
+
+```{R}
+set.seed(348)
+df1<-data.frame(norms=rnorm(10000,82,11))
+sum(df1<60)
+mean(df1<60)
+```
+
+*215 draws have values less than 60, which was about 2.15%. This is 0.13% less than 1.1*
+
+##### (b) (2 pts) What proportion of your sample is greater than 110 or less than 54?
+
+```{R}
+sum(df1>110,df1<54)
+mean(df1>110)+mean(df1<54)
+```
+
+*The sample proportion greater than 110 or less 54 is about 1.05%*
+
+##### (c) (2 pts) Why are your answers close to what you got above? Why are they not exactly the same?
+
+*The answers are similar because the pnorm function calculates the population percentage within a normal distribution.*
+---
+
+##### (d) (3 pts) Using ggplot2, make a histogram of your sample. Set y=..density.. inside aes(). Overlay a normal distribution with +stat_function(aes(samp), fun=dnorm, args=list(82,11)). Using geom_vline(xintercept=), add dashed vertical lines corresponding to the 2.5th and the 97.5th percentile of the sample
+
+```{R}
+ggplot(df1)+geom_histogram(aes(norms,..density..))+
+  stat_function(aes(norms),fun=dnorm,args=list(82,11))+
+  geom_vline(xintercept = quantile(norms,0.025))
+```
+
+### Question 3
+
+##### (a) (2 pt) Using `dplyr` functions (filter, summarize; do not use any [] or $) and the `faithful` dataset, what is the standard deviation of `eruptions` when `waiting` is less than the median? 
+
+```{R}
+
+faithful%>%filter(waiting<median(waiting))%>%summarize(sd(eruptions))
+```
+
+##### (b) (3 pt) Using `dplyr` and the `faithful` dataset, create new variables that give `eruption` and `waiting` time in *hours* rather than *minutes*. Use `mutate()` *only once* to achieve this! Do not use any [] or $.
+
+```{R}
+faithful%>%mutate(eruptionshr=eruptions/60,waitinghr=waiting/60)
+```
+
+
+```{R, echo=F}
+## DO NOT DELETE THIS BLOCK!
+sessionInfo()
+Sys.time()
+Sys.info()
+```
