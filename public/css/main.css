@@ -1,7 +1,7 @@
 /* Main page with stikky-footer */
 html, body {
   height: 100%;
-  background-color: #fff;
+  background-color: #d5deeb;
   font-family: 'Source Sans Pro', sans-serif;
   /* The html and body elements cannot have any padding or margin. */
   border-top: 3px solid #191945;
@@ -91,10 +91,10 @@ html, body {
   margin: 20px 0;
 }
 .container a {
-  color: #191945;
+  color: #d48422;
 }
 .container a:hover {
-  color: #191945;
+  color: ##d48422;
 }
 .container p img, .img-responsive {
   display: block;
@@ -116,10 +116,10 @@ html, body {
   font-size: 15px;
 }
 .panel-default h4 a, h5 a {
-  color: #191945;
+  color: #d48422;
 }
 .panel-default h4 a:hover, h5 a:hover {
-  color: #191945;
+  color: #d48422;
 }
 .panel{
   border-style: none;
