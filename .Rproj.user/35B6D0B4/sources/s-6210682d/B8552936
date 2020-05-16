@@ -5,15 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1519194718",
+    "hash" : "183094637",
     "id" : "B8552936",
-    "lastKnownWriteTime" : 1589519519,
-    "last_content_update" : 1589519519287,
+    "lastKnownWriteTime" : 1589598286,
+    "last_content_update" : 1589598286740,
     "path" : "~/rcn468website/content/about.Rmd",
     "project_path" : "content/about.Rmd",
     "properties" : {
-        "cursorPosition" : "3,17",
-        "scrollLine" : "0"
+        "cursorPosition" : "10,390",
+        "scrollLine" : "8"
     },
     "relative_order" : 5,
     "source_on_save" : false,

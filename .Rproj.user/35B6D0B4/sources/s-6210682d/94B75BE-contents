@@ -1,5 +1,5 @@
 ---
-title: Blog - Applying Python and R
+title: Blog - Applying Python in data science - Clustering
 author: ''
 date: '2020-05-15'
 slug: blog
@@ -8,18 +8,82 @@ tags: []
 description: ''
 ---
 
-##
+
+![](/blog/2020-05-14-blog_files/Screen Shot 2020-05-15 at 9.27.12 PM.png)
+
+
+##While R is a program commonly used in data science and statistics, python can also be used to accomplish similar purposes. Various data manipulations can be done on both programs. In the example below, clustering is completed using R and python on the iris dataset. In R, clustering was done using kmeans.
 
 ```{R}
+library(tidyverse)
+library(cluster)
+kmeans<-iris%>%select(-Species)%>%kmeans(3)
+kmeans
+```
+
+###In python, the kmeans function allows for clustering and assignment of the data points into three clusters, similar to what was done in R. In python, the clusters are (0,1,2), which is similar to the clusters in R (1,2,3). Python can also calculate the cluster means using .cluster_centers_. 
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.cluster import KMeans
+
+iris = datasets.load_iris()
+x=iris.data
+y=iris.target
+
+kmeans = KMeans(n_clusters=3)
+y_kmeans = kmeans.fit_predict(x)
+print(y_kmeans)
+
+abc = kmeans.cluster_centers_
+print(abc)
 
 
+```
+
+
+
+###Below I created four clusters, using kmeans, on the iris dataset. In comparison, using three clusters would provide better visualization because cluster four and three are not as abundant as cluster one and two. 
+
+```{R}
+kmeans1<-iris%>%select(-Species)%>%kmeans(4)
+kmeans1
 ```
 
 ```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.cluster import KMeans
 
+iris = datasets.load_iris()
+x=iris.data
+y=iris.target
 
+kmeans = KMeans(n_clusters=4)
+y_kmeans = kmeans.fit_predict(x)
+print(y_kmeans)
+
+abc = kmeans.cluster_centers_
+print(abc)
 ```
 
+###In the R code below, I graphed the three clusters based on all four variables (sepal width, sepal length, petal length, petal width). In the python, I graphed the three clusters based on only sepal width and sepal length. 
 
+```{R}
+library(GGally)
+library(plotly) 
+final <- iris %>% mutate(cluster = as.factor(kmeans$cluster))
+final %>% plot_ly(x =  ~Sepal.Width,  y =  ~Petal.Length,  z =  ~Petal.Width,  color =  ~cluster, 
+    type =  "scatter3d",  mode =  "markers",  symbol =  ~Species,  symbols =  c('circle', 'x', 'o'))
+ggpairs(final, columns=1:4, aes(color=Species))
+```
+
+![](/blog/2020-05-14-blog_files/Screen Shot 2020-05-15 at 5.52.44 PM.png)
+
+###In conclusion, the following examples demonstrate that R and python can both cluster and plot data. 
 
 

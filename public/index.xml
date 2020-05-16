@@ -17,16 +17,16 @@
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/about/</guid>
-      <description> Biography:  dfd  Resume:  RYAN CANG NGUYEN  5211 Kylie Springs Ln – Houston, TX 77066 ryancangng@gmail.com – (281)701-7093  [EDUCATION]  The University of Texas at Austin  College of Natural Sciences – Bachelor in Science and Arts, Biology  ——————————————————————————————–  [EMPLOYMENT HISTORY AND EXPERIENCE]  Research Assistant: University of Texas  -• Discuss and evaluate multiple hospital research projects  -• Organize weekly meetings and objectives  -• Undergo literature searches specific to each project  -• Coordinate with research director on weekly agendas  Electrocardiography Technician: Saint David’s Medical Center - Austin  -• Conduct electrocardiograms on patients  -• Organize exam orders and patient information  -• Assist physicians, nurses, and hospital staff  Emergency Medical Technician: South West Emergency Action Team  -• Worked as an independent contractor for the South West Emergency Action Team  -• Provided treatment and transport for patients  Emergency Medical Technician: Capitol Medical Services  -• Worked as an independent contractor for the Capitol Medical Services  -• Provided medical screening and assessment for contractors ——————————————————————————————–   [VOLUNTEER SERVICES]  Harris County Health System  -• Volunteer within hospitals and clinics of Harris County  -• Assist nurses and doctors with daily duties  -• Participate in developmental projects and plans  Willowbrook Brookdale Senior Living  -• Assist staff with daily work and operational duties  -• Organize daily activities with fellow residents  -• Assist with serving food and cleaning during lunch time  -• Provide relative physical assistance to residents ——————————————————————————————–   [SKILLS AND INTERESTS]  Fluent in English and Vietnamese  BLS CPR Certified and EMT Certification  Proficiency in Microsoft Excel, Word, PowerPoint  Interests: Martial Arts, Sports, Music  </description>
+      <description>Biography:  My name is Ryan Nguyen, a recent graduate of the University of Texas Austin. I graduated from UT Austin in 2020, with a Bachelor in Science and Arts, majoring in Biology. I am pursuing a career in medicine and possess experience working in this field. Currently, I am living and working in the Houston area. My resume and contact information are listed below (and linked on the front page)  Resume:  RYAN CANG NGUYEN  5211 Kylie Springs Ln – Houston, TX 77066 ryancangng@gmail.</description>
     </item>
     
     <item>
-      <title>Blog - Applying Python and R</title>
+      <title>Blog - Applying Python in data science - Clustering</title>
       <link>/blog/blog/</link>
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/blog/blog/</guid>
-      <description>   </description>
+      <description>While R is a program commonly used in data science and statistics, python can also be used to accomplish similar purposes. Various data manipulations can be done on both programs. In the example below, clustering is completed using R and python on the iris dataset. In R, clustering was done using kmeans. library(tidyverse) ## ── Attaching packages ──────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ── ## ✔ ggplot2 3.</description>
     </item>
     
     <item>
