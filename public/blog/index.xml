@@ -17,7 +17,7 @@
       <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/blog/blog/</guid>
-      <description>While R is a program commonly used in data science and statistics, python can also be used to accomplish similar purposes. Various data manipulations can be done on both programs. In the example below, clustering is completed using R and python on the iris dataset. In R, clustering was done using kmeans. library(tidyverse) ## ── Attaching packages ──────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ── ## ✔ ggplot2 3.</description>
+      <description>While R is a program commonly used in data science and statistics, python can also be used to accomplish similar purposes. Various data manipulations can be done on both programs. One manipulation that can be done on both programs is clustering. Clustering is important in data science because it create groupings of the data points. This creates a visualization of the positioning and correlation of the data.</description>
     </item>
     
   </channel>

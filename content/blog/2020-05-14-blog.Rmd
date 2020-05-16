@@ -12,7 +12,8 @@ description: ''
 ![](/blog/2020-05-14-blog_files/Screen Shot 2020-05-15 at 9.27.12 PM.png)
 
 
-##While R is a program commonly used in data science and statistics, python can also be used to accomplish similar purposes. Various data manipulations can be done on both programs. In the example below, clustering is completed using R and python on the iris dataset. In R, clustering was done using kmeans.
+##While R is a program commonly used in data science and statistics, python can also be used to accomplish similar purposes. Various data manipulations can be done on both programs. One manipulation that can be done on both programs is clustering. Clustering is important in data science because it create groupings of the data points. This creates a visualization of the positioning and correlation of the data. 
+##Both R and python can create clusters, with differences in functions and names. In the example below, clustering is completed using R on the iris dataset using kmeans.
 
 ```{R}
 library(tidyverse)
@@ -21,7 +22,7 @@ kmeans<-iris%>%select(-Species)%>%kmeans(3)
 kmeans
 ```
 
-###In python, the kmeans function allows for clustering and assignment of the data points into three clusters, similar to what was done in R. In python, the clusters are (0,1,2), which is similar to the clusters in R (1,2,3). Python can also calculate the cluster means using .cluster_centers_. 
+###In python, the kmeans function allows for clustering and assignment of the data points into three clusters, similar to what was done in R. In python, the clusters are (0,1,2), which is similar to the clusters in R (1,2,3). Python can also calculate the cluster means using .cluster_centers_. It is possible to run python code while using R by the reticulate package (). This allows Rstudio to import python packages and run python codes alongside R codes. Base on the example below, python was also able to create three clusters and calculate the cluster means. 
 ```{python}
 import numpy as np
 import pandas as pd
@@ -71,7 +72,7 @@ abc = kmeans.cluster_centers_
 print(abc)
 ```
 
-###In the R code below, I graphed the three clusters based on all four variables (sepal width, sepal length, petal length, petal width). In the python, I graphed the three clusters based on only sepal width and sepal length. 
+###In the R code below, I graphed the three clusters based on all four variables (sepal width, sepal length, petal length, petal width)(second graph). The 3d graph plots each datapoint in relation to sepal width, petal length, and petal width. In python, I graphed the three clusters based on only sepal width and sepal length (last graph). 
 
 ```{R}
 library(GGally)
@@ -84,6 +85,6 @@ ggpairs(final, columns=1:4, aes(color=Species))
 
 ![](/blog/2020-05-14-blog_files/Screen Shot 2020-05-15 at 5.52.44 PM.png)
 
-###In conclusion, the following examples demonstrate that R and python can both cluster and plot data. 
+###In conclusion, the following examples demonstrate that R and python can both cluster and plot data. Using both languages alongside each other allows for greater data manipulation and flexibility. 
 
 
